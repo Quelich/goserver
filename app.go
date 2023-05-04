@@ -9,11 +9,12 @@ import (
 )
 
 func main() {
+	
 	router := mux.NewRouter()
 
 	// Register static files path
 	fs := http.FileServer(http.Dir("static/"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 
 	// Register router
 	http.Handle("/", router)
@@ -36,8 +37,6 @@ func listen() {
 
 // Handlers
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL.Path)
-	w.WriteHeader(http.StatusOK)
 	p := "." + r.URL.Path
 	if p == "./" { /*root directory*/
 		p = buildHtml(r.URL.Path + "index")
@@ -46,7 +45,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL.Path)
 	p := buildHtml(r.URL.Path)
 	http.ServeFile(w, r, p)
 }
