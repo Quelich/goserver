@@ -1,6 +1,6 @@
 # GoServer
 
-GoServer is a simple HTTP server written in Go.
+GoServer is a simple static HTTP server written in Go.
 
 You can serve `.html`, `.css`, `.js`, etc.
 
